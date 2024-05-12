@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Candidate.Core.Entities
 {
-	public class Candidate
+	public class CandidateEntity
 	{
 		public int Id { get; set; }
 		public string FirstName { get; set; } = null!;
