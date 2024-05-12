@@ -1,6 +1,8 @@
 
 using Candidate.Repository.Data;
+using Candidate_Test_Task.Helpers;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace Candidate_Test_Task
 {
@@ -20,6 +22,14 @@ namespace Candidate_Test_Task
 		    builder.Services.AddDbContext<CandidateDbContext>(options =>
 			options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 			);
+
+			builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
+			{
+				var connection = builder.Configuration.GetConnectionString("Redis");
+				return ConnectionMultiplexer.Connect(connection);
+			});
+
+			builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 			var app = builder.Build();
 
